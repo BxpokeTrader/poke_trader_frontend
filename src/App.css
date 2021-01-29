@@ -25,3 +25,14 @@
 .right-side{
   text-align: end;
 }
+
+
+.hitorical_data{
+  margin-top: 10%;
+  display:flex; 
+  margin-left: 20%;
+  margin-right: 20%;
+  flex-direction:row;
+  justify-content: space-around;
+  align-content: space-between;
+}

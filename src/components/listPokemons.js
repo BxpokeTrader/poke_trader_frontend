@@ -1,22 +1,20 @@
-import React from 'react';
+import React, { useState, useEffect } from "react";
 import './media.css';
 
-class ListPokemons extends React.Component {
-	constructor(props){
-		super(props);
-		
-		this.state = {'pokemons': this.props.data};
-	}
+const ListPokemons = ({selected}) => {
+    const [data, setValue] = useState(selected);
+    useEffect(() => { setValue(data) }, [data]);
 	
-	render(){
-		return(
-			this.state.pokemons.map((pokemon, index) => {
+    return(
+        <div>
+            <p>{selected}</p>
+            {/* data.map((pokemon, index) => {
                 return (
-                    <p>{index} - {pokemon.label} - {pokemon.value}</p>
+                    <p> {index} - {pokemon.label} - {pokemon.value}</p>
                 );
-            })
-		);
-	}
+            }) */}
+        </div>
+    );
 }
 
 
