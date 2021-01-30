@@ -4,6 +4,7 @@ import Menu from './components/menu';
 import LeftSide from './components/leftSideComponent'
 import RightSide from './components/rightSideComponent'
 import axios from 'axios'
+import HistoricalData from './components/hitoricalData/historicalData';
 
 export default function App(){
 	const [historic, setHistoric] = useState([])
@@ -24,22 +25,7 @@ export default function App(){
 					<RightSide className='right-side'/>
 				</div>
 			</div>	
-
-			<div className='hitorical_data'>
-				<div className='left_side'>
-					<p>Lado Esquerdo:</p>
-					<ul>
-						{historic.map(trade => <li>{trade.left_side.map(pokemon => <p>{pokemon.name} - {pokemon.base_expecience}</p>)}</li>)}
-					</ul>
-				</div>
-				
-				<div className='right_side'>
-					<p>Lado Direito:</p>
-					<ul>
-						{historic.map(trade => <li>{trade.right_side.map(pokemon => <p>{pokemon.name} - {pokemon.base_expecience}</p>)}</li>)}
-					</ul>
-				</div>
-			</div>
+			<HistoricalData trades={historic}/>
 			<p>--------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
 		</div>
 	);
