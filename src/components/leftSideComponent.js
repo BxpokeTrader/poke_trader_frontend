@@ -1,35 +1,65 @@
 import React, { useState } from "react";
-import MultiSelect from "react-multi-select-component";
-import ListPokemons from './listPokemons';
+import Form from 'react-bootstrap/Form'
+import Row from 'react-bootstrap/Row'
+import Col from 'react-bootstrap/Col'
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button'
+import axios from 'axios'
 
-const LeftSide: React.FC = () => {
-  const options = [
-    { label: "Charmander", value: 100 },
-    { label: "Charizard", value: 240 },
-    { label: "Pikachu", value: 200 },
-  ];
+const LeftSide: React.FC = (props) => {
 
-  const [selected, setSelected] = useState([]);
+  const [selected, setSelected] = useState([])
+  const [search, setSearch] = useState('')
 
-  const customValueRenderer = (selected, _options) => {
-    return selected.length
-      ? selected.map(({ label }) => "✔️ " + label)
-      : "😶 No Pokemons Selected";
-  };
+  const handleChange = (event) => {
+    setSearch(event.target.value)
+  }
+
+  const clearSelected = () => {
+    setSelected([])
+  }
+
+  const searchPokemon = async () => {
+    await axios
+			.get('https://pokeapi.co/api/v2/pokemon/' + search)
+			.then((response) => {
+        if(response.data){
+          let data = {
+            'name': response.data.name,
+            'base_experience': response.data.base_experience
+          }
+          setSelected([...selected, data])
+        }
+      })
+  }
 
   return (
     <div>
-      <MultiSelect
-        options={options}
-        value={selected}
-        onChange={setSelected}
-        valueRenderer={customValueRenderer}
-        labelledBy={"Select the Pokemons"}
-      />
-      <h3>You will give:</h3>
-      {/* TODO: create a component to list the selected Pokemons */}
-      <ListPokemons data={selected}/>
+      <Form>
+        <Row>
+          <Col>
+            <Form.Control placeholder="Search a Pokemon" onChange={handleChange} />
+          </Col>
+        </Row>
+        <Button onClick={searchPokemon}>Search</Button>
+      </Form>
+      <Modal.Dialog>
+        <Modal.Header>
+          <Modal.Title>Sua Proposta</Modal.Title>
+        </Modal.Header>
+
+        <Modal.Body>
+          <ul>{selected.map((item) => {return (<li>{item.name}</li>)} )}</ul>
+        </Modal.Body>
+
+        <Modal.Footer>
+          <Button variant="secondary" onClick={clearSelected}>Clear</Button>
+          <Button variant="primary">Save</Button>
+        </Modal.Footer>
+      </Modal.Dialog>
+
     </div>
+
   );
 };
 

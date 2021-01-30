@@ -8,6 +8,8 @@ import HistoricalData from './components/hitoricalData/historicalData';
 
 export default function App(){
 	const [historic, setHistoric] = useState([])
+	const [pokemons, setPokemons] = useState([])
+	const [offset, setOffset] = useState(0)
 
 	useEffect(async () => {
 		await axios
