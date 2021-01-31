@@ -21,6 +21,7 @@ const RightSide: React.FC = (props) => {
     setSelected([])
     props.callback([])
     setColor('black')
+    props.clear('')
   }
 
   const saveProposal = () => {
@@ -30,14 +31,21 @@ const RightSide: React.FC = (props) => {
 
   const searchPokemon = async () => {
     await axios
-			.get('https://pokeapi.co/api/v2/pokemon/' + search)
+			.get('https://pokeapi.co/api/v2/pokemon/' + search.toLowerCase())
 			.then((response) => {
         if(response.status === 200){
           let data = {
             'name': response.data.name,
-            'base_experience': response.data.base_experience
+            'base_experience': response.data.base_experience,
+            'image': response.data.sprites.front_default
           }
-          setSelected([...selected, data])
+          if(selected.length < 6){
+            setSelected([...selected, data])
+            setColor('black')
+          }else{
+            // Handle this error!!!
+            setError('You cant add more than 6 pokemons!')
+          }
         }else{
           setError('Pokemon not found!')
         }
@@ -61,7 +69,7 @@ const RightSide: React.FC = (props) => {
         </Modal.Header>
 
         <Modal.Body>
-          <ul>{selected.map((item) => {return (<li>{item.name}</li>)} )}</ul>
+          {selected.map((item) => {return (<p><img src={item.image}/>{item.name} - {item.base_experience}</p>)})}
         </Modal.Body>
 
         <Modal.Footer>

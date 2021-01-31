@@ -12,13 +12,13 @@ export default function Home() {
 	const [leftSide, setLeftSide] = useState([])
 	const [rightSide, setRightSide] = useState([])
 	const [home, setHome] = useState(true)
-
+	const [isFair, setIsFair] = useState('')
 
 	useEffect(async () => {
 		await axios
 			.get('http://localhost:8000/trade/')
 			.then(response => setHistoric(response.data.trades))
-	}, []);
+	}, [home]);
 
 
 	function setLeftSideCallback(data){
@@ -34,8 +34,27 @@ export default function Home() {
 	}
 
 	function handleResponse(response){
-		//TODO: Change the interface to show to the user if the trade is fair or not.
+		setIsFair(response.result)
 	}
+
+	async function saveTrade(){
+		const headers = { 
+			'Content-Type': 'application/json'
+		};
+
+		const trade = {
+			'right_side': rightSide,
+			'left_side': leftSide,
+			'result': ''	
+		}
+		await axios.post('http://localhost:8000/trade/save/', trade, { headers })
+			.then(response => handleResponse(response.data))
+		refreshPage()
+	}
+
+	function refreshPage() {
+		window.location.reload(false);
+	  }
 
 	async function verifyTrade(){
 		const trade = {
@@ -58,14 +77,17 @@ export default function Home() {
 				<Menu callback={changePageCallback} local={changePageCallback}/>
 				<div hidden={!home}>
 					<h1>Verify your trade!</h1>
+					<h2>{isFair}</h2>
+					
 					<div className='trade-input'>
-						<LeftSide callback={setLeftSideCallback} className='left-side'/>
+						<LeftSide clear={setIsFair} callback={setLeftSideCallback} className='left-side'/>
 						<Button onClick={verifyTrade}>Verify!</Button>
-						<RightSide callback={setRightSideCallback} className='right-side'/>
+						<RightSide clear={setIsFair} callback={setRightSideCallback} className='right-side'/>
 					</div>
 				</div>
 			</div>	
-			{!home ? <HistoricalData trades={historic}/> : null}
+			{isFair !== '' ? <Button onClick={saveTrade}>Save Trade</Button> : null}
+			{!home ? <HistoricalData trades={historic.reverse()}/> : null}
 		</div>
 	);
 }

@@ -6,7 +6,7 @@ import Modal from 'react-bootstrap/Modal'
 import Button from 'react-bootstrap/Button'
 import axios from 'axios'
 
-const LeftSide: React.FC = (props) => {
+export default function LeftSide(props){
 
   const [selected, setSelected] = useState([])
   const [search, setSearch] = useState('')
@@ -20,6 +20,7 @@ const LeftSide: React.FC = (props) => {
     setSelected([])
     props.callback([])
     setColor('black')
+    props.clear('')
   }
 
   const saveProposal = () => {
@@ -29,14 +30,21 @@ const LeftSide: React.FC = (props) => {
 
   const searchPokemon = async () => {
     await axios
-			.get('https://pokeapi.co/api/v2/pokemon/' + search)
+			.get('https://pokeapi.co/api/v2/pokemon/' + search.toLowerCase())
 			.then((response) => {
         if(response.data){
           let data = {
             'name': response.data.name,
-            'base_experience': response.data.base_experience
+            'base_experience': response.data.base_experience,
+            'image': response.data.sprites.front_default
           }
-          setSelected([...selected, data])
+          if(selected.length < 6){
+            setSelected([...selected, data])
+            setColor('black')
+          }else{
+            // Handle this error!!!
+            console.log('Max 6!')
+          }
         }
       })
   }
@@ -58,7 +66,7 @@ const LeftSide: React.FC = (props) => {
           </Modal.Header>
 
           <Modal.Body>
-            <ul>{selected.map((item) => {return (<li>{item.name}</li>)} )}</ul>
+          {selected.map((item) => {return (<p><img src={item.image}/>{item.name} - {item.base_experience}</p>)})}
           </Modal.Body>
 
           <Modal.Footer>
@@ -72,5 +80,3 @@ const LeftSide: React.FC = (props) => {
 
   );
 };
-
-export default LeftSide;
