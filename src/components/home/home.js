@@ -40,7 +40,12 @@ export default function Home() {
 		if(response.result === 'This trade is unfair!'){
 			setIsFairColor('#f6a410')
 		}else{
-			setIsFairColor('green')
+			if(response.result === 'This trade is fair!'){
+				setIsFairColor('green')
+			}else{
+				setIsFair('gray')
+			}
+			
 		}
 	}
 
@@ -64,7 +69,7 @@ export default function Home() {
 	  }
 
 	async function verifyTrade(){
-		if(rightSide.length && leftSide.length) {
+		if(rightSide.length > 0 && leftSide.length > 0) {
 			const trade = {
 				'right_side': rightSide,
 				'left_side': leftSide,
@@ -74,7 +79,6 @@ export default function Home() {
 			const headers = { 
 				'Content-Type': 'application/json'
 			};
-			
 			await axios.post('http://localhost:8000/trade/verify/', trade, { headers })
 				.then(response => handleResponse(response.data))
 		}else{
@@ -99,7 +103,8 @@ export default function Home() {
 				</div>
 			</div>	
 			{isFair === 'This trade is unfair!' ? <p>Are you sure? I guess that it is not a good choice..</p> : null}
-			{isFair !== '' ? <Button style={{background: isFairColor}} onClick={saveTrade}>I know, but I agree!</Button> : null}
+			{isFair === 'This trade is unfair!' && home ? <Button style={{background: isFairColor}} onClick={saveTrade}>I know, but I agree!</Button> : null}
+			{isFair === 'This trade is fair!' && home ? <Button style={{background: isFairColor}} onClick={saveTrade}>Save it!!</Button> : null}
 			{!home ? <HistoricalData trades={historic}/> : null}
 		</div>
 	);
