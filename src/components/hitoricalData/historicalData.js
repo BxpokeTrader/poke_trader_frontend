@@ -5,7 +5,9 @@ import TradeHistory from './tradeHistory';
 export default function HistoricalData(props){
 
 	return (
-		<div className='hitorical_data'>
+		<div>
+			<h1 className='history_title'>Trade History</h1>
+			<div className='hitorical_data'>
 				<div className='left_side'>
 					{/* TODO: Refactor it to make each card as a Trade */}
 					{/* <TradeHistory trade={props.trades}/> */}
@@ -26,5 +28,7 @@ export default function HistoricalData(props){
 					</ul>
 				</div>
 			</div>
+		</div>
+		
 	);
 }

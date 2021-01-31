@@ -1,34 +1,22 @@
 .App {
   text-align: center;
-  align-content: center;
-  
-}
-
-#brand{
-	color: white;
+  align-content: center;  
 }
 
 .trade-input{
   display:flex; 
   margin-left: 20%;
   margin-right: 20%;
+  margin-top: 3%;
   flex-direction:row;
-  justify-content: space-around;
-  align-content: space-between;
-
-}
-
-.left-side{
   text-align: start;
+  justify-content: space-around;
 }
 
-.right-side{
-  text-align: end;
-}
 
 
 .hitorical_data{
-  margin-top: 10%;
+  margin-top: 4%;
   display:flex; 
   margin-left: 20%;
   margin-right: 20%;

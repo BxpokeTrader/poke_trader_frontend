@@ -61,11 +61,11 @@ const RightSide: React.FC = (props) => {
             <Form.Control placeholder="Search a Pokemon" onChange={handleChange} />
           </Col>
         </Row>
-        <Button onClick={searchPokemon}>Search</Button>
+        <Button style={{margin:10}}onClick={searchPokemon}>Search</Button>
       </Form>
       <Modal.Dialog style={{color: color}}>
         <Modal.Header>
-          <Modal.Title>Proposta do amigo</Modal.Title>
+          <Modal.Title>Friend's proposal</Modal.Title>
         </Modal.Header>
 
         <Modal.Body>

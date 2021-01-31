@@ -57,12 +57,12 @@ export default function LeftSide(props){
             <Form.Control placeholder="Search a Pokemon" onChange={handleChange} />
           </Col>
         </Row>
-        <Button onClick={searchPokemon}>Search</Button>
+        <Button style={{margin:10}} onClick={searchPokemon}>Search</Button>
       </Form>
       <div style={{color:color}}>
         <Modal.Dialog>
           <Modal.Header>
-            <Modal.Title>Sua Proposta</Modal.Title>
+            <Modal.Title>Your proposal</Modal.Title>
           </Modal.Header>
 
           <Modal.Body>

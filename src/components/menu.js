@@ -12,11 +12,11 @@ export default function Menu(props){
 	}
 
 	return(
-		<Navbar color="primary">
+		<Navbar color="light">
 			<div className="container" id="brand">
-				<NavbarBrand>Poke-Trader</NavbarBrand>
-				<a onClick={homePage}>Verify Trade</a>
-				<a onClick={historicalData}>Historical Trades</a>
+				<NavbarBrand onClick={homePage}>Poke-Trader</NavbarBrand>
+				<NavbarBrand onClick={homePage}>Verify Trade</NavbarBrand>
+				<NavbarBrand onClick={historicalData}>Historical Trades</NavbarBrand>
 			</div>
 		</Navbar>
 	);

@@ -4,19 +4,16 @@ import Card from 'react-bootstrap/Card'
 export default function TradeHistory(props){
     const [height, setHeight] = useState('10rem')
 
-    let text = ''
     let bg
     if(props.result == "This trade is fair!"){
-        text = "This was a good trade! Both of them made a good deal."
         bg = 'success'
     }else{
-        text = "there are those who say that it was not a good deal.."
         bg = 'warning'
     }
 
     useEffect(() => {
 		if(props.size < 3){
-            setHeight('10rem')
+            setHeight('13rem')
         }else{
             if(props.size < 5){
                 setHeight('28rem')
