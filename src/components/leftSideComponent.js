@@ -10,6 +10,7 @@ const LeftSide: React.FC = (props) => {
 
   const [selected, setSelected] = useState([])
   const [search, setSearch] = useState('')
+  const [color, setColor] = useState('black')
 
   const handleChange = (event) => {
     setSearch(event.target.value)
@@ -17,6 +18,13 @@ const LeftSide: React.FC = (props) => {
 
   const clearSelected = () => {
     setSelected([])
+    props.callback([])
+    setColor('black')
+  }
+
+  const saveProposal = () => {
+    setColor('green')
+    props.callback(selected)
   }
 
   const searchPokemon = async () => {
@@ -43,20 +51,22 @@ const LeftSide: React.FC = (props) => {
         </Row>
         <Button onClick={searchPokemon}>Search</Button>
       </Form>
-      <Modal.Dialog>
-        <Modal.Header>
-          <Modal.Title>Sua Proposta</Modal.Title>
-        </Modal.Header>
+      <div style={{color:color}}>
+        <Modal.Dialog>
+          <Modal.Header>
+            <Modal.Title>Sua Proposta</Modal.Title>
+          </Modal.Header>
 
-        <Modal.Body>
-          <ul>{selected.map((item) => {return (<li>{item.name}</li>)} )}</ul>
-        </Modal.Body>
+          <Modal.Body>
+            <ul>{selected.map((item) => {return (<li>{item.name}</li>)} )}</ul>
+          </Modal.Body>
 
-        <Modal.Footer>
-          <Button variant="secondary" onClick={clearSelected}>Clear</Button>
-          <Button variant="primary">Save</Button>
-        </Modal.Footer>
-      </Modal.Dialog>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={clearSelected}>Clear</Button>
+            <Button variant="primary" onClick={saveProposal}>Save</Button>
+          </Modal.Footer>
+        </Modal.Dialog>
+      </div>
 
     </div>
 
