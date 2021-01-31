@@ -98,8 +98,8 @@ export default function Home() {
 					<Button className='verify_button' onClick={verifyTrade}>Verify!</Button>
 				</div>
 			</div>	
-			{isFair !== '' ? <Button style={{background: isFairColor}} onClick={saveTrade}>Save Trade</Button> : null}
 			{isFair === 'This trade is unfair!' ? <p>Are you sure? I guess that it is not a good choice..</p> : null}
+			{isFair !== '' ? <Button style={{background: isFairColor}} onClick={saveTrade}>I know, but I agree!</Button> : null}
 			{!home ? <HistoricalData trades={historic}/> : null}
 		</div>
 	);
