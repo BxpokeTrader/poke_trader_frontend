@@ -1,20 +1,22 @@
 import React from 'react';
 import { Navbar, NavbarBrand } from 'reactstrap';
-import HistoricalData from './hitoricalData/historicalData';
-import './media.css';
 
-export default function Menu(){
+export default function Menu(props){
 
-	const historicalData = (props) => {
-		return <HistoricalData/>
+	const historicalData = () => {
+		props.callback(false)
+	}
+
+	const homePage = () => {
+		props.callback(true)
 	}
 
 	return(
 		<Navbar color="primary">
 			<div className="container" id="brand">
 				<NavbarBrand>Poke-Trader</NavbarBrand>
+				<a onClick={homePage}>Verify Trade</a>
 				<a onClick={historicalData}>Historical Trades</a>
-				<Navbar>Pokemons</Navbar>
 			</div>
 		</Navbar>
 	);
