@@ -73,7 +73,7 @@ const RightSide: React.FC = (props) => {
         </Modal.Header>
 
         <Modal.Body>
-          {selected.map((item) => {return (<p><img src={item.image}/>{item.name} - {item.base_experience}</p>)})}
+          {selected.map((item) => {return (<p><img src={item.image} alt='pokemon front'/>{item.name} - {item.base_experience}</p>)})}
         </Modal.Body>
 
         <Modal.Footer>

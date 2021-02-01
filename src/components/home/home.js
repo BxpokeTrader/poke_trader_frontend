@@ -17,10 +17,13 @@ export default function Home() {
 	const [isFairColor, setIsFairColor] = useState('blue')
 	const [hasError, setHasError] = useState(false)
 
-	useEffect(async () => {
-		await axios
+	useEffect(() => {
+		async function getHistory(){
+			await axios
 			.get('https://poketrader-backend.herokuapp.com/trade/')
 			.then(response => setHistoric(response.data.trades))
+		}
+		getHistory()
 	}, [home]);
 
 
@@ -94,7 +97,7 @@ export default function Home() {
 			<div>
 				<Menu callback={changePageCallback} local={changePageCallback}/>
 				<div hidden={!home}>
-					<h1>Verify your trade!</h1>
+					<h1>Verify your Pokemon trade!</h1>
 					<h2>{isFair}</h2>
 					
 					<div className='trade-input'>
