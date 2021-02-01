@@ -11,10 +11,12 @@ const RightSide: React.FC = (props) => {
   const [selected, setSelected] = useState([])
   const [search, setSearch] = useState('')
   const [color, setColor] = useState('black')
-  const [error, setError] = useState('')
+  const [pokemonNotFound, setPokemonNotFound] = useState(false)
+  const [moreThanSixError, setMoreThanSixError] = useState(false)
 
   const handleChange = (event) => {
     setSearch(event.target.value)
+    // setPokemonNotFound(false)
   }
 
   const clearSelected = () => {
@@ -22,6 +24,7 @@ const RightSide: React.FC = (props) => {
     props.callback([])
     setColor('black')
     props.clear('')
+    setMoreThanSixError(false)
   }
 
   const saveProposal = () => {
@@ -43,11 +46,11 @@ const RightSide: React.FC = (props) => {
             setSelected([...selected, data])
             setColor('black')
           }else{
-            // Handle this error!!!
-            setError('You cant add more than 6 pokemons!')
+            setMoreThanSixError(true)
           }
         }else{
-          setError('Pokemon not found!')
+          console.log('NOT FOUND!!!')
+          setPokemonNotFound(true)
         }
       })
   }
@@ -57,8 +60,9 @@ const RightSide: React.FC = (props) => {
       <Form>
         <Row>
           <Col>
-            <p>{error}</p>
             <Form.Control placeholder="Search a Pokemon" onChange={handleChange} />
+            {moreThanSixError && <ErrorMoreThanSix></ErrorMoreThanSix>}
+            {pokemonNotFound && <ErrorPokemonNotFound></ErrorPokemonNotFound>}
           </Col>
         </Row>
         <Button style={{margin:10}}onClick={searchPokemon}>Search</Button>
@@ -83,4 +87,13 @@ const RightSide: React.FC = (props) => {
   );
 };
 
+function ErrorMoreThanSix() {
+	return <h6 style={{color: 'red'}}>You can't trade more than six pokemons!</h6>
+}
+
+function ErrorPokemonNotFound() {
+	return <h4 style={{color: 'red'}}>Pokemon not found!</h4>
+}
+
 export default RightSide;
+

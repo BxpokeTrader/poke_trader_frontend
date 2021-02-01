@@ -15,10 +15,11 @@ export default function Home() {
 	const [home, setHome] = useState(true)
 	const [isFair, setIsFair] = useState('')
 	const [isFairColor, setIsFairColor] = useState('blue')
+	const [hasError, setHasError] = useState(false)
 
 	useEffect(async () => {
 		await axios
-			.get('http://localhost:8000/trade/')
+			.get('https://poketrader-backend.herokuapp.com/trade/')
 			.then(response => setHistoric(response.data.trades))
 	}, [home]);
 
@@ -59,7 +60,7 @@ export default function Home() {
 			'left_side': leftSide,
 			'result': ''	
 		}
-		await axios.post('http://localhost:8000/trade/save/', trade, { headers })
+		await axios.post('https://poketrader-backend.herokuapp.com/trade/save/', trade, { headers })
 			.then(response => handleResponse(response.data))
 		refreshPage()
 	}
@@ -79,10 +80,11 @@ export default function Home() {
 			const headers = { 
 				'Content-Type': 'application/json'
 			};
-			await axios.post('http://localhost:8000/trade/verify/', trade, { headers })
+			await axios.post('https://poketrader-backend.herokuapp.com/trade/verify/', trade, { headers })
 				.then(response => handleResponse(response.data))
+			setHasError(false)
 		}else{
-			console.log('error! Handle it!')
+			setHasError(true)
 		}
 		
 	}
@@ -106,6 +108,11 @@ export default function Home() {
 			{isFair === 'This trade is unfair!' && home ? <Button style={{background: isFairColor}} onClick={saveTrade}>I know, but I agree!</Button> : null}
 			{isFair === 'This trade is fair!' && home ? <Button style={{background: isFairColor}} onClick={saveTrade}>Save it!!</Button> : null}
 			{!home ? <HistoricalData trades={historic}/> : null}
+			{hasError && home && <ErrorVerifyWithoutSave></ErrorVerifyWithoutSave>}
 		</div>
 	);
+}
+
+function ErrorVerifyWithoutSave() {
+	return <h3 style={{color: 'red'}}>Please search Pokemons and save the proposal before verify it!</h3>
 }

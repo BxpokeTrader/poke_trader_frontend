@@ -11,6 +11,8 @@ export default function LeftSide(props){
   const [selected, setSelected] = useState([])
   const [search, setSearch] = useState('')
   const [color, setColor] = useState('black')
+  const [hasError, setHasError] = useState(false)
+  const [moreThanSixError, setMoreThanSixError] = useState(false)
 
   const handleChange = (event) => {
     setSearch(event.target.value)
@@ -21,6 +23,7 @@ export default function LeftSide(props){
     props.callback([])
     setColor('black')
     props.clear('')
+    setMoreThanSixError(false)
   }
 
   const saveProposal = () => {
@@ -42,8 +45,7 @@ export default function LeftSide(props){
             setSelected([...selected, data])
             setColor('black')
           }else{
-            // Handle this error!!!
-            console.log('Max 6!')
+            setMoreThanSixError(true)
           }
         }
       })
@@ -55,6 +57,7 @@ export default function LeftSide(props){
         <Row>
           <Col>
             <Form.Control placeholder="Search a Pokemon" onChange={handleChange} />
+            {moreThanSixError && <ErrorMoreThanSix></ErrorMoreThanSix>}
           </Col>
         </Row>
         <Button style={{margin:10}} onClick={searchPokemon}>Search</Button>
@@ -80,3 +83,11 @@ export default function LeftSide(props){
 
   );
 };
+
+function ErrorPokemonNotFound() {
+	return <h4 style={{color: 'red'}}>Pokemon not found!</h4>
+}
+
+function ErrorMoreThanSix() {
+	return <h6 style={{color: 'red'}}>You can't trade more than six pokemons!</h6>
+}
