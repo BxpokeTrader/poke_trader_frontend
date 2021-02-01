@@ -11,11 +11,12 @@ export default function LeftSide(props){
   const [selected, setSelected] = useState([])
   const [search, setSearch] = useState('')
   const [color, setColor] = useState('black')
-  const [hasError, setHasError] = useState(false)
+  const [pokemonNotFound, setPokemonNotFound] = useState(false)
   const [moreThanSixError, setMoreThanSixError] = useState(false)
 
   const handleChange = (event) => {
     setSearch(event.target.value)
+    setPokemonNotFound(false)
   }
 
   const clearSelected = () => {
@@ -47,6 +48,8 @@ export default function LeftSide(props){
           }else{
             setMoreThanSixError(true)
           }
+        }else{
+          setPokemonNotFound(true)
         }
       })
   }
@@ -58,6 +61,7 @@ export default function LeftSide(props){
           <Col>
             <Form.Control placeholder="Search a Pokemon" onChange={handleChange} />
             {moreThanSixError && <ErrorMoreThanSix></ErrorMoreThanSix>}
+            {pokemonNotFound && <ErrorPokemonNotFound></ErrorPokemonNotFound>}
           </Col>
         </Row>
         <Button style={{margin:10}} onClick={searchPokemon}>Search</Button>
@@ -69,7 +73,7 @@ export default function LeftSide(props){
           </Modal.Header>
 
           <Modal.Body>
-          {selected.map((item) => {return (<p><img src={item.image}/>{item.name} - {item.base_experience}</p>)})}
+          {selected.map((item) => {return (<p><img src={item.image} alt='pokemon front'/>{item.name} - {item.base_experience}</p>)})}
           </Modal.Body>
 
           <Modal.Footer>

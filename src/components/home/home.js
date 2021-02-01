@@ -17,10 +17,13 @@ export default function Home() {
 	const [isFairColor, setIsFairColor] = useState('blue')
 	const [hasError, setHasError] = useState(false)
 
-	useEffect(async () => {
-		await axios
+	useEffect(() => {
+		async function getHistory(){
+			await axios
 			.get('https://poketrader-backend.herokuapp.com/trade/')
 			.then(response => setHistoric(response.data.trades))
+		}
+		getHistory()
 	}, [home]);
 
 

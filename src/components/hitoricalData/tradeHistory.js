@@ -5,7 +5,7 @@ export default function TradeHistory(props){
     const [height, setHeight] = useState('10rem')
 
     let bg
-    if(props.result == "This trade is fair!"){
+    if(props.result === "This trade is fair!"){
         bg = 'success'
     }else{
         bg = 'warning'
@@ -21,14 +21,14 @@ export default function TradeHistory(props){
                 setHeight('32rem')
             }
         }
-	}, []);
+	}, [props.size]);
 
     return (
         <Card bg={bg} className='trade_history' style={{width: '20rem', height: height}}>
         <Card.Body>
             <Card.Title>Trade {props.idx}</Card.Title>
             <Card.Text>
-                {props.pokemons.map(pokemon => <p> <img width="50" height="60" src={pokemon.image}/> {pokemon.name} - {pokemon.base_experience}</p>)}
+                {props.pokemons.map(pokemon => <p> <img width="50" height="60" src={pokemon.image} alt='pokemon front'/> {pokemon.name} - {pokemon.base_experience}</p>)}
             </Card.Text>
         </Card.Body>
         </Card>
